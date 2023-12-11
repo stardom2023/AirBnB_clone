@@ -29,27 +29,27 @@ class_home = {
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)  '
 
-    def do_Eod(self, line):
+    def do_EOF(self, line):
         """Exits console"""
         print("")
         return True
 
-    def all_quits(self, line):
+    def do_quit(self, line):
         """Quit command to exit the program"""
         print("Good Bye!")
         return True
 
-    def exit(self):
+    def help_quit(self):
         """when two arguments involve"""
         print('\n'.join(["Quit command to exit the program"]))
 
-    def empty_space(self):
+    def emptyline(self):
         """ overwriting the emptyline method """
         return False
         # OR
         # pass
 
-    def create_new(self, line):
+    def do_create(self, line):
         """Creates a new instances of a class"""
         if line:
             try:
@@ -62,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def show_all(self, line):
+    def do_show(self, line):
         """print <class name> <id>"""
         arr = line.split()    # split & assign to varia
 
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(storage.all()[new_str])
 
-    def destroy_all(self, line):
+    def do_destroy(self, line):
         """Destroy command deletes an instance based on the class name and id
         """
         arr = line.split()
@@ -98,7 +98,23 @@ class HBNBCommand(cmd.Cmd):
             #    del (storage.all()[new_str])
                 storage.save()
 
-    def all(self, line):
+    # def do_all(self, line):
+    #    """ Print all instances in string representation """
+    #    new_list = []
+
+    #    if not line:
+    #        for key, obj in storage.all().items():
+    #            new_list.append(str(obj))
+    #        print(new_list)
+    #    elif line not in class_home:
+    #        print("** class doesn't exist **")
+    #    else:
+    #        for key, obj in storage.all().items():
+    #            if obj.__class__.__name__ == line:
+    #                new_list.append(str(obj))
+    #        print(new_list)
+
+    def do_all(self, line):
         """ Print all instances in string representation """
         objects = []
         if line == "":
@@ -114,7 +130,21 @@ class HBNBCommand(cmd.Cmd):
                         objects.append(str(value))
                 print(objects)
 
-    def update_all(self, line):
+    # def do_all(self, line):
+    #    """ Print all instances in string representation """
+    #    arr = line.split()
+    #    if len(arr) > 0 and arr[0] not in storage.class_dict():
+    #        print("** class doesn't exist **")
+    #    else:
+    #        new_list = []
+    #        for obj in storage.all().values():
+    #            if len(arr) > 0 and arr[0] == obj.__class__.__name__:
+    #                new_list.append(obj.__str__())
+    #            elif len(arr) == 0:
+    #                new_list.append(obj.__str__())
+    #        print(new_list)
+
+    def do_update(self, line):
         """Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary.
         usage:  update <class> <id> <attribute_name> <attribute_value> or
@@ -145,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(storage.all()[new_str], arr[2], arr[3])
                 storage.save()
 
-    def count_all(self, line):
+    def do_count(self, line):
         """Print the count all class instances"""
         kclass = globals().get(line, None)
         if kclass is None:
@@ -157,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
                 count += 1
         print(count)
 
-    def de_funct(self, line):
+    def default(self, line):
         if line is None:
             return
 
